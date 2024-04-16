@@ -10,6 +10,9 @@ const prisma = new PrismaClient();
 
 export const { handlers, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "database",
+  },
   providers: [
     Credentials({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.

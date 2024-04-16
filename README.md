@@ -18,27 +18,41 @@ bun dev
 
 ## Nested Routes
 
-folder Route segment
-folder/folder Nested route segment
+| Syntax        | Description          |
+| ------------- | -------------------- |
+| folder        | Route segment        |
+| folder/folder | Nested route segment |
 
 ## Dynamic Routes
 
-[folder] Dynamic route segment
-[...folder] Catch-all route segment
-[[...folder]] Optional catch-all route segment
+| Syntax        | Description                      |
+| ------------- | -------------------------------- |
+| [folder]      | Dynamic route segment            |
+| [...folder]   | Catch-all route segment          |
+| [[...folder]] | Optional catch-all route segment |
 
 ## Route Groups
 
-(folder) Group routes without affecting routing
-\_folder Opt folder and all child segments out of routing
+| Syntax   | Description                                      |
+| -------- | ------------------------------------------------ |
+| (folder) | Group routes without affecting routing           |
+| \_folder | Opt folder and all child segments out of routing |
 
 ## Parallel and Intercepted Routes
 
-@folder Named slot
-(.)folder Intercept same level
-(..)folder Intercept one level above
-(..)(..)folder Intercept two levels above
-(...)folder Intercept from root
+- @folder Named slot
+- (.)folder Intercept same level
+  (..)folder Intercept one level above
+  (..)(..)folder Intercept two levels above
+  (...)folder Intercept from root
+
+| Syntax         | Description               |
+| -------------- | ------------------------- |
+| @folder        | Named slot                |
+| (.)folder      | Intercept one level above |
+| (..)folder     | Intercept one level above |
+| (..)(..)folder | Intercept two level above |
+| (...)folder    | Intercept from root       |
 
 ## Styling
 
@@ -256,9 +270,9 @@ export function formatTimeToNow(date: Date): string {
 
 ## Auth.js
 
-Strategy: Database
-Provider: Credentials
-Adapter: MongoDB
+- Strategy: Database
+- Provider: Credentials
+- Adapter: MongoDB
 
 ### Take Note of NextAuth.js v5
 
