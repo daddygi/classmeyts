@@ -40,12 +40,6 @@ bun dev
 
 ## Parallel and Intercepted Routes
 
-- @folder Named slot
-- (.)folder Intercept same level
-  (..)folder Intercept one level above
-  (..)(..)folder Intercept two levels above
-  (...)folder Intercept from root
-
 | Syntax         | Description               |
 | -------------- | ------------------------- |
 | @folder        | Named slot                |
