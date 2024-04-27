@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Sample Global Variables */
+* {
+  box-sizing: border-box;
+}
+
+/* Sample Global Variables
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -69,4 +73,4 @@
 
     --radius: 0.5rem;
   }
-}
+} */
