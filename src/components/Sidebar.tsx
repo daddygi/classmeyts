@@ -28,7 +28,7 @@ const NavLinks = [
     id: 4,
     title: "Account",
     icon: "/account.png",
-    href: "/account",
+    href: "/profile",
   },
 ];
 
