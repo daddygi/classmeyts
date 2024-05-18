@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
+*,
+::before,
+::after {
+  border-width: 0;
 }
-
 /* Sample Global Variables
 @layer base {
   :root {

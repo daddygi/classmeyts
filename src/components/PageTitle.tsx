@@ -5,7 +5,7 @@ interface TitleProps {
 }
 
 function PageTitle(props: TitleProps) {
-  return <div>{props.title}</div>;
+  return <h1 className="font-bold text-3xl">{props.title}</h1>;
 }
 
 export default PageTitle;

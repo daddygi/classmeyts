@@ -1,18 +1,18 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import PageTitle from "@/components/ui/PageTitle";
+import PageTitle from "@/components/PageTitle";
 
-function DashboardPage() {
+function DiscussionPage() {
   return (
     <div className="h-full flex">
       <div className="xl:w-20 xl:h-full ">
         <Sidebar />
       </div>
       <div className="">
-        <PageTitle title="Dashboard" />
+        <PageTitle title="Discussion" />
       </div>
     </div>
   );
 }
 
-export default DashboardPage;
+export default DiscussionPage;

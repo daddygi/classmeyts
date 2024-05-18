@@ -12,6 +12,10 @@ const config: Config = {
       "secondary-color-blue": "#394D6A",
       "page-background": "#DDE6F1",
       white: "#FFFFFF",
+      "sign-in-first-color": "#9DAFDD",
+      "sign-in-last-color": "#2F424E",
+      "text-main-color": "#2E3546",
+      "link-color": "#5B86F4",
     },
     extend: {
       backgroundImage: {
