@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import PageTitle from "@/components/ui/PageTitle";
+import PageTitle from "@/components/PageTitle";
 
 function BookmarksPage() {
   return (
