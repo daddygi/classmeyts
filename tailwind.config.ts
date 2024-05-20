@@ -16,6 +16,7 @@ const config: Config = {
       "sign-in-last-color": "#2F424E",
       "text-main-color": "#2E3546",
       "link-color": "#5B86F4",
+      important: "#DE5252",
     },
     extend: {
       backgroundImage: {

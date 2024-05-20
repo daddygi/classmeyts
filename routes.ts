@@ -8,7 +8,7 @@ export const publicRoutes = ["/", "/new-verification"];
  *
  * @type {string[]}
  */
-export const authRoutes = ["/sign-in", "/sign-up"];
+export const authRoutes = ["/sign-in", "/sign-up", "/reset", "/new-password"];
 
 export const apiAuthPrefix = "/api/auth";
 

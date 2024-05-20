@@ -8,31 +8,31 @@ import { cn } from "@/utils/utils";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { signInSchema } from "../../../../schemas";
-import { signInUser } from "../../../../actions/signIn";
+import { ResetSchema } from "../../../../schemas";
+import { reset } from "../../../../actions/reset";
 import FormError from "@/components/Form-error";
 import FormSuccess from "@/components/Form-success";
 
 const baloo = Baloo_2({ subsets: ["latin"] });
-function SignInForm() {
-  type FormData = z.infer<typeof signInSchema>;
+function ResetForm() {
+  type FormData = z.infer<typeof ResetSchema>;
 
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const { register, handleSubmit } = useForm<FormData>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      email: "",
     },
   });
   const onSubmit = (data: FormData) => {
     setError("");
     setSuccess("");
+
     startTransition(() => {
-      signInUser(data).then((data) => {
+      reset(data).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -50,52 +50,40 @@ function SignInForm() {
           resources, engage in discussions, and receive valuable peer feedback.
         </div>
       </div>
-      <div className="flex flex-col bg-white w-[684px] h-[591px] items-center p-12">
+      <div className="flex flex-col bg-white w-[684px] h-[591px] items-center p-12 gap-4">
         <div
           className={cn(
             baloo.className,
-            "text-5xl text-text-main-color mb-2 tracking-widest font-extrabold drop-shadow-xl"
+            "text-4xl text-text-main-color mb-2 tracking-widest font-extrabold drop-shadow-xl"
           )}
         >
-          Welcome!
+          Forgot your password?
         </div>
-        <div className="mb-12">Sign in to continue</div>
+        <div className="mb-12">Reset your password through email</div>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col w-[486px] mb-12"
         >
           <TextField
-            label="Username"
+            label="Email"
             variant="standard"
             className="mb-10"
-            {...register("username")}
+            {...register("email")}
             disabled={isPending}
           />
-          <TextField
-            label="Password"
-            variant="standard"
-            type="password"
-            {...register("password")}
-            disabled={isPending}
-          />
-          <div className="text-sm flex justify-end w-full mb-12">
-            <Link href="/reset" className="text-link-color">
-              Forgot Password?
-            </Link>
-          </div>
+
           <div className="flex flex-col justify-center items-center gap-4">
             <Button
               variant="contained"
               className="w-[486px] bg-secondary-color-blue text-white"
               type="submit"
             >
-              Sign In
+              Send reset email
             </Button>
             <p>
-              Don't have an account?{" "}
-              <Link href="/sign-up" className="text-link-color underline">
-                Sign up
+              <Link href="/sign-in" className="text-link-color underline">
+                Back to Sign In
               </Link>
             </p>
           </div>
@@ -109,4 +97,4 @@ function SignInForm() {
   );
 }
 
-export default SignInForm;
+export default ResetForm;

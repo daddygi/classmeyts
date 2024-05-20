@@ -1,12 +1,18 @@
 //@ts-nocheck
+"use client";
 import React from "react";
 import Sidebar from "@/components/Sidebar";
 import PageTitle from "@/components/PageTitle";
 import Cards from "@/components/Cards";
-import { auth, signOut } from "@/auth";
+import { signOut } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-const DashboardPage = async () => {
-  const session = await auth();
+const DashboardPage = () => {
+  const user = useCurrentUser();
+  // console.log("This is session.user", session?.user);
+  const onClick = () => {
+    signOut();
+  };
 
   return (
     <div className="h-full flex">
@@ -18,16 +24,11 @@ const DashboardPage = async () => {
         <div></div>
         <div></div>
         <div>
+          {JSON.stringify(user.studentNumber)}
           <Cards />
         </div>
-        <form
-          action={async () => {
-            "use server";
-            await signOut();
-          }}
-        >
-          <button type="submit">Sign Out</button>
-        </form>
+
+        <button onClick={onClick}>Sign Out</button>
       </div>
     </div>
   );

@@ -16,5 +16,19 @@ export const signUpSchema = z.object({
   college: z.string(),
   department: z.string(),
   yearLevel: z.string(),
-  password: z.string(),
+  password: z.string().min(6, {
+    message: "Minimum of 6 charachters required",
+  }),
+});
+
+export const ResetSchema = z.object({
+  email: z.string().email({
+    message: "Email is required",
+  }),
+});
+
+export const NewPasswordSchema = z.object({
+  password: z.string().min(6, {
+    message: "Minimum of 6 charachters required",
+  }),
 });
