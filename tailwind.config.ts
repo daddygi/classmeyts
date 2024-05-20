@@ -18,6 +18,7 @@ const config: Config = {
       "link-color": "#5B86F4",
       important: "#DE5252",
       settings: "#EFEFEF",
+      "background-light-blue": "#E2EBF7",
     },
     extend: {
       backgroundImage: {
