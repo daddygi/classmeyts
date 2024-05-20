@@ -19,6 +19,9 @@ import FormError from "@/components/Form-error";
 import FormSuccess from "@/components/Form-success";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { updateUser } from "../../../../actions/update-user";
+import { Baloo_2 } from "next/font/google";
+import { cn } from "@/utils/utils";
+const baloo = Baloo_2({ subsets: ["latin"] });
 
 function ProfilePage() {
   type FormData = z.infer<typeof updateUserSchema>;
@@ -399,10 +402,67 @@ function ProfilePage() {
           </div>
           <div className="flex-col">
             <div className="flex flex-col bg-white w-[415px] h-[360px] p-8 items-center mb-7 rounded-lg">
-              Gamification
+              <h1
+                className={cn(
+                  baloo.className,
+                  "text-3xl bg-gradient-to-b from-sign-in-first-color to-sign-in-last-color text-transparent bg-clip-text"
+                )}
+              >
+                Membership Badge
+              </h1>
             </div>
-            <div className="flex flex-col bg-white w-[415px] h-[360px] p-8 items-center  rounded-lg">
-              Settings
+            <div className="flex flex-col bg-white w-[415px] h-[360px] p-8 rounded-lg gap-4">
+              <div className="flex gap-2">
+                <h1 className="texl-3xl text-seconday-color-blue">Settings</h1>
+                <Image
+                  src="/settings.png"
+                  alt="settings"
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="w-full h-[48px] bg-settings flex gap-2 items-center p-3">
+                  <h1>Notification Privacy</h1>
+                  <Image
+                    src="/notifications.png"
+                    alt="settings"
+                    width={24}
+                    height={24}
+                    className="ml-auto mr-3"
+                  />
+                </div>
+                <div className="w-full h-[48px] bg-settings flex gap-2 items-center p-3">
+                  <h1>Change Password</h1>
+                  <Image
+                    src="/encrypted.png"
+                    alt="settings"
+                    width={15}
+                    height={15}
+                    className="ml-auto mr-4"
+                  />
+                </div>
+                <div className="w-full h-[48px] bg-settings flex gap-2 items-center p-3">
+                  <h1>Account Deactivation</h1>
+                  <Image
+                    src="/account_circle_off.png"
+                    alt="settings"
+                    width={20}
+                    height={20}
+                    className="ml-auto mr-3"
+                  />
+                </div>
+                <div className="w-full h-[48px] bg-settings flex gap-2 items-center p-3">
+                  <h1>FAQs and Help Center</h1>
+                  <Image
+                    src="/info.png"
+                    alt="settings"
+                    width={20}
+                    height={20}
+                    className="ml-auto mr-3"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
