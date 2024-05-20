@@ -17,6 +17,7 @@ const config: Config = {
       "text-main-color": "#2E3546",
       "link-color": "#5B86F4",
       important: "#DE5252",
+      settings: "#EFEFEF",
     },
     extend: {
       backgroundImage: {
