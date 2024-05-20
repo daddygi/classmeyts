@@ -5,11 +5,7 @@ import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "../routes";
 import { AuthError } from "next-auth";
 import { generateVerificationTOken } from "@/utils/tokens";
-import {
-  getUserByEmail,
-  getUserByUsername,
-  getUserEmailByUsername,
-} from "../data/users";
+import { getUserByUsername } from "../data/users";
 import { sendVerificationEmail } from "@/utils/mail";
 
 type FormData = z.infer<typeof signInSchema>;

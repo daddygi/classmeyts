@@ -33,6 +33,10 @@ export const {
         session.user.firstName = token.firstName as string;
         session.user.lastName = token.lastName as string;
         session.user.username = token.username as string;
+        session.user.studentNumber = token.studentNumber;
+        session.user.college = token.college;
+        session.user.department = token.department;
+        session.user.yearLevel = token.yearLevel;
       }
 
       return session;
@@ -47,7 +51,10 @@ export const {
       token.firstName = existingUser.firstName;
       token.lastName = existingUser.lastName;
       token.username = existingUser.username;
-
+      token.studentNumber = existingUser.studentNumber;
+      token.college = existingUser.college;
+      token.department = existingUser.department;
+      token.yearLevel = existingUser.yearLevel;
       return token;
     },
   },
