@@ -32,3 +32,16 @@ export const NewPasswordSchema = z.object({
     message: "Minimum of 6 charachters required",
   }),
 });
+
+export const updateUserSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email().endsWith("adamson.edu.ph"),
+  username: z.string(),
+  studentNumber: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
+    message: "Expected number, received a string",
+  }),
+  college: z.string(),
+  department: z.string(),
+  yearLevel: z.string(),
+});

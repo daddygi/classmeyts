@@ -14,41 +14,56 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { signUpSchema } from "../../../../schemas";
+import { updateUserSchema } from "../../../../schemas";
 import FormError from "@/components/Form-error";
 import FormSuccess from "@/components/Form-success";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { updateUser } from "../../../../actions/update-user";
 
 function ProfilePage() {
-  type FormData = z.infer<typeof signUpSchema>;
+  type FormData = z.infer<typeof updateUserSchema>;
   const [college, setCollege] = useState("");
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+
+  const user = useCurrentUser();
+
+  useEffect(() => {
+    if (user?.college) {
+      setCollege(user.college);
+    }
+  }, [user]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      username: "",
-      studentNumber: "",
-      college: "",
-      department: "",
-      yearLevel: "",
-      password: "",
+      firstName: `${user?.firstName || ""}`,
+      lastName: `${user?.lastName || ""}`,
+      email: `${user?.email || ""}`,
+      username: `${user?.username || ""}`,
+      studentNumber: `${user?.studentNumber || ""}`,
+      college: `${user?.college || ""}`,
+      department: `${user?.department || ""}`,
+      yearLevel: `${user?.yearLevel || ""}`,
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     setError("");
     setSuccess("");
-    startTransition(() => {});
+
+    // console.log(data);
+    startTransition(() => {
+      updateUser(data).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
   };
 
   const collegeList = [
@@ -289,6 +304,7 @@ function ProfilePage() {
                     {...register("college")}
                     onChange={(e: any) => setCollege(e.target.value)}
                     disabled={isPending}
+                    defaultValue={user?.college || ""}
                   >
                     {collegeList.map((college) => (
                       <MenuItem key={college.key} value={college.value}>
@@ -305,6 +321,7 @@ function ProfilePage() {
                     {...register("department")}
                     label="Department"
                     disabled={isPending}
+                    defaultValue={user?.department || ""}
                   >
                     {college === "College of Architecture" && (
                       <MenuItem value="Architecture">Architecture</MenuItem>
@@ -351,6 +368,7 @@ function ProfilePage() {
                   <Select
                     label="Year Level"
                     {...register("yearLevel")}
+                    defaultValue={user?.yearLevel || ""}
                     disabled={isPending}
                   >
                     <MenuItem value="First Year">First Year</MenuItem>
