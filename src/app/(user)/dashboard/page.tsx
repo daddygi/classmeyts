@@ -12,7 +12,7 @@ const DashboardPage = () => {
       </div>
       <div className="p-12 flex-col">
         <PageTitle title="Dashboard" />
-        <div></div>
+        <div>asdfasdfsadfs</div>
         <div></div>
         <div>
           <Cards />
