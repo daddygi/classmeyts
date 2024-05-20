@@ -33,6 +33,23 @@ export const NewPasswordSchema = z.object({
   }),
 });
 
+export const SettingsChangePasswordSchema = z
+  .object({
+    password: z.string().min(6, {
+      message: "Minimum of 6 characters required",
+    }),
+    newPassword: z.string().min(6, {
+      message: "Minimum of 6 characters required",
+    }),
+    retypeNewPassword: z.string().min(6, {
+      message: "Minimum of 6 characters required",
+    }),
+  })
+  .refine((data) => data.newPassword === data.retypeNewPassword, {
+    message: "New passwords do not match",
+    path: ["retypeNewPassword"],
+  });
+
 export const updateUserSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
