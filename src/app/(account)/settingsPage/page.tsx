@@ -11,7 +11,7 @@ const SettingsPage = () => {
         <Sidebar />
       </div>
       <div className="p-12 flex-col">
-        <PageTitle title="Settings" />
+        <PageTitle title="Settings & Privacy" />
       </div>
     </div>
   );
