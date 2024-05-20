@@ -7,6 +7,10 @@
 ::after {
   border-width: 0;
 }
+
+html {
+  scroll-behavior: smooth;
+}
 /* Sample Global Variables
 @layer base {
   :root {
