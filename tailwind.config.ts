@@ -19,6 +19,7 @@ const config: Config = {
       important: "#DE5252",
       settings: "#EFEFEF",
       "background-light-blue": "#E2EBF7",
+      gray: "#A5A5A5",
     },
     extend: {
       backgroundImage: {
