@@ -62,3 +62,13 @@ export const updateUserSchema = z.object({
   department: z.string(),
   yearLevel: z.string(),
 });
+
+export const addCollegeSchema = z.object({
+  college: z.string(),
+});
+export const addDepartmentSchema = z.object({
+  collegeId: z.string().refine((val) => !Number.isNaN(parseInt(val, 2)), {
+    message: "Expected number, received a string",
+  }),
+  department: z.string(),
+});

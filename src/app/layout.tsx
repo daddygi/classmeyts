@@ -20,7 +20,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="en">
         <body className={comfortaa.className}>
-          <div className="h-screen w-screen bg-page-background">{children}</div>
+          <div className="h-100% w-screen bg-page-background">{children}</div>
         </body>
       </html>
     </SessionProvider>

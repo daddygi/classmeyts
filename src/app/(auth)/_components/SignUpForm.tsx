@@ -27,7 +27,7 @@ function SignUpForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
-
+  const [to_push, setTo_push] = useState([]);
   const {
     register,
     handleSubmit,
@@ -215,7 +215,17 @@ function SignUpForm() {
       value: "Psychology",
     },
   ];
-
+  const colleges =[
+    ...collegeList.map(college => ({ college: college.value })),
+  ]
+  const departments = [
+    ...COBA.map(dept => ({ department: dept.value, college_id: 2 })),  
+    ...COE.map(dept => ({ department: dept.value, college_id: 3 })),   
+    ...COELA.map(dept => ({ department: dept.value, college_id: 5 })), 
+    ...COS.map(dept => ({ department: dept.value, college_id: 8 }))   
+  ];
+  // setTo_push([...colleges, ...departments]);
+// now pota try ko na mag push ng data sa database mongoshit
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-b from-sign-in-first-color to-sign-in-last-color">
       <div className="bg-white p-12 w-[805px] h-[752px] ">
