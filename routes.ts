@@ -2,7 +2,7 @@
  *
  * @type {string[]}
  */
-export const publicRoutes = ["/", "/new-verification"];
+export const publicRoutes = ["/", "/new-verification", "/api/posts"];
 
 /**Routes that  require auth
  *
