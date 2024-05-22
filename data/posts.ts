@@ -9,3 +9,21 @@ export const getAllPost = async () => {
     return [];
   }
 };
+
+export const getPostById = async (id: string) => {
+  try {
+    const post = await db.posts.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+    return post;
+  } catch (error) {
+    return null;
+  }
+};

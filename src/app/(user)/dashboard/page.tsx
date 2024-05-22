@@ -7,11 +7,27 @@ import SearchBar from "@/components/SearchComponent";
 import Dropdown from "@/components/Dropdown";
 import PostTemplate from "@/components/PostTemplate";
 
+interface Post {
+  id: string;
+  userId: string;
+  department: string;
+  upvote: number;
+  downvote: number;
+  description: string;
+  title: string;
+  file: string;
+  tags: string;
+  archive: boolean;
+  user: {
+    username: string;
+  };
+}
+
 const DashboardPage = () => {
   const [hasNewNotification, setHasNewNotification] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,7 +65,7 @@ const DashboardPage = () => {
     setShowNotifications(!showNotifications);
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
@@ -100,11 +116,12 @@ const DashboardPage = () => {
             currentCards.map((post) => (
               <Cards
                 key={post.id}
-                username={post.userId}
+                id={post.id}
+                username={post.user.username}
                 title={post.title}
                 description={post.description}
                 tags={post.tags}
-                file={new File([post.file], post.file)} // Mock file creation
+                file={new File([post.file], post.file)}
                 upvote={post.upvote}
                 downvote={post.downvote}
               />
