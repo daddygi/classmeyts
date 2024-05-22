@@ -62,3 +62,10 @@ export const updateUserSchema = z.object({
   department: z.string(),
   yearLevel: z.string(),
 });
+
+export const createPostSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  userId: z.string(),
+  department: z.string(),
+});

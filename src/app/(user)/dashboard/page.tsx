@@ -1,38 +1,57 @@
-// pages/dashboard.js
-
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import PageTitle from "@/components/PageTitle";
 import Cards from "@/components/Cards";
 import SearchBar from "@/components/SearchComponent";
 import Dropdown from "@/components/Dropdown";
+import PostTemplate from "@/components/PostTemplate";
 
 const DashboardPage = () => {
   const [hasNewNotification, setHasNewNotification] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const cardsData = new Array(19).fill(null);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("/api/posts");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPosts(data);
+        console.log("Fetched data:", data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const cardsPerPage = 4;
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = posts.slice(indexOfFirstCard, indexOfLastCard);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(posts.length / cardsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   const handleNotificationClick = () => {
     setHasNewNotification(false);
     setShowNotifications(!showNotifications);
   };
 
-  const handlePageChange = (pageNumber: any) => {
+  const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  const indexOfLastCard = currentPage * cardsPerPage;
-  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = cardsData.slice(indexOfFirstCard, indexOfLastCard);
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(cardsData.length / cardsPerPage); i++) {
-    pageNumbers.push(i);
-  }
 
   return (
     <div className="h-full flex bg-gray-100">
@@ -73,30 +92,26 @@ const DashboardPage = () => {
             )}
           </div>
         </div>
-        <div className="mb-8 bg-white p-6 rounded-xl w-[1693px]">
-          <input
-            type="text"
-            placeholder="Title"
-            className="w-full p-4 mb-2 border rounded text-gray"
-          />
-          <textarea
-            placeholder="Describe everything about this post here... #Tags"
-            className="w-full p-4 border rounded h-32"
-          ></textarea>
-          <div className="flex justify-between items-center mt-2">
-            <button className="p-2 border rounded">Attach</button>
-            <div>
-              <button className="p-2 mr-2 border rounded">Cancel</button>
-              <button className="p-2 bg-secondary-color-blue text-white rounded">
-                Post
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap">
-          {currentCards.map((_, index) => (
-            <Cards key={index} />
-          ))}
+        <PostTemplate />
+        <div className="grid grid-cols-4 gap-4">
+          {loading ? (
+            <p>Loading posts...</p>
+          ) : currentCards.length > 0 ? (
+            currentCards.map((post) => (
+              <Cards
+                key={post.id}
+                username={post.userId}
+                title={post.title}
+                description={post.description}
+                tags={post.tags}
+                file={new File([post.file], post.file)} // Mock file creation
+                upvote={post.upvote}
+                downvote={post.downvote}
+              />
+            ))
+          ) : (
+            <p>No posts available</p>
+          )}
         </div>
         <div className="flex justify-center mt-6">
           <ul className="flex list-none">
