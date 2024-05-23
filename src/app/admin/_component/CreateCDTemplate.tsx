@@ -72,7 +72,7 @@ function CreateCDTemplate() {
   };
 
   return (
-    <form className="mb-8 bg-white p-6 rounded-xl w-[400px]" onSubmit={handleSubmit}>
+    <form className="mb-8 bg-white p-6 rounded-xl w-60%" onSubmit={handleSubmit}>
       <TextField
         id="college-name"
         label="College Name"

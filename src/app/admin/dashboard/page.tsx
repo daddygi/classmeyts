@@ -46,24 +46,24 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="h-full flex">
-      <div className="xl:w-20 xl:h-full">
+    <div className="h-screem flex">
+      <div className="xl:w-20 h-screen">
         <Sidebar />
       </div>
       <div className="p-12 flex flex-col flex-grow">
         <PageTitle title="Dashboard" />
         <SearchBar />
-        <div className="p-12 flex flex-col gap-12">
+        <div className="p-12 flex flex-col gap-9">
           <PageTitle title="College Block" />
           <div className="flex-grow flex justify-center items-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
               <Card
                 title="Trending College Blocks"
-                data={{ key1: "hello", key2: "world" }}
+                data={{ key1: "College of Science", key2: "College of Engineering", key3: "College of Pharmacy" }}
               />
               <Card
                 title="Most Recent Activity"
-                data={{ key1: "hello", key2: "world" }}
+                data={{ key1: "College of Engineering", key2: "College of Education & Liberal Arts" }}
               />
               <Card title={"All College Blocks"} data={{ ...collegeBlocks }} />
             </div>
@@ -76,12 +76,12 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
               <div className="grid grid-rows-2 gap-4">
                 <Card
-                  title="Department 1"
-                  data={{ key1: "hello", key2: "world" }}
+                  title=" Trending Department Blocks"
+                  data={{ key1: "Computer Science", key2: "Chemistry", key3:"Biology", key4:"Political Science", key5:"Philosophy", key6:"Geology" }}
                 />
                 <Card
-                  title="Department 2"
-                  data={{ key1: "hello", key2: "world" }}
+                  title="Most Recent Activity"
+                  data={{ key1: "Computer Science", key2: "Biology", key3: "Polotical Science" }}
                 />
               </div>
               <div
@@ -99,9 +99,10 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
-        <div className="p-12 flex flex-col gap-12">
+        <div className="p-12 flex flex-col gap-12 align-center justify-center">
           <PageTitle title="Create College Block" />
-          <CreateCDTemplate />
+          <div className="justify-center align-center"><CreateCDTemplate /></div>
+          
         </div>
       </div>
     </div>
