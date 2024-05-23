@@ -29,6 +29,7 @@ const DashboardPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -50,13 +51,27 @@ const DashboardPage = () => {
     fetchPosts();
   }, []);
 
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    setCurrentPage(1); // Reset to the first page when a new search is performed
+  };
+
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const cardsPerPage = 4;
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = posts.slice(indexOfFirstCard, indexOfLastCard);
+  const currentCards = filteredPosts.slice(indexOfFirstCard, indexOfLastCard);
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(posts.length / cardsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(filteredPosts.length / cardsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -77,7 +92,11 @@ const DashboardPage = () => {
       <div className="flex-1 p-6">
         <PageTitle title="Dashboard" />
         <div className="flex justify-between items-center mt-4 mb-8">
-          <SearchBar />
+          <SearchBar
+            onChange={handleSearchInputChange}
+            onClick={handleSearchButtonClick}
+          />{" "}
+          {/* Pass the handlers */}
           <Dropdown />
           <div className="relative">
             <button

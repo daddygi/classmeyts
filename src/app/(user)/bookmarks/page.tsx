@@ -78,7 +78,7 @@ const BookmarksPage = () => {
         <Sidebar />
       </div>
       <div className="flex-1 p-6">
-        <PageTitle title="Dashboard" />
+        <PageTitle title="Bookmarks" />
         <div className="flex justify-between items-center mt-4 mb-8">
           <SearchBar />
           <Dropdown />

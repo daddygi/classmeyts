@@ -35,35 +35,20 @@ const Cards: React.FC<CardsProps> = ({
   const user = useCurrentUser();
 
   useEffect(() => {
-    const fetchBookmarkStatus = async (userId: string, postId: string) => {
+    async function fetchBookmarkStatus() {
+      if (!user) return;
       try {
-        const response = await fetch("/api/bookmarks", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId, postId }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
+        const response = await fetch(
+          `/api/bookmarks?userId=${user.id}&postId=${id}`
+        );
         const data = await response.json();
-        return data;
+        setIsBookmarked(data.isBookmarked);
       } catch (error) {
         console.error("Error fetching bookmark status", error);
-        return null;
       }
-    };
-
-    if (user) {
-      fetchBookmarkStatus(user.id, id).then((data) => {
-        if (data && data.isBookmarked !== undefined) {
-          setIsBookmarked(data.isBookmarked);
-        }
-      });
     }
+
+    fetchBookmarkStatus();
   }, [user, id]);
 
   const handleBookmarkToggle = async (e: React.MouseEvent) => {
@@ -83,17 +68,12 @@ const Cards: React.FC<CardsProps> = ({
       });
 
       if (response.ok) {
-        const result = await response.json();
-        if (result.success) {
-          setIsBookmarked(!isBookmarked);
-        } else {
-          console.error("Error toggling bookmark");
-        }
+        setIsBookmarked(!isBookmarked);
       } else {
-        console.error("Error toggling bookmark");
+        console.error("Error bookmarking post");
       }
     } catch (error) {
-      console.error("Error toggling bookmark", error);
+      console.error("Error bookmarking post", error);
     }
   };
 
