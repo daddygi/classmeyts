@@ -69,3 +69,11 @@ export const createPostSchema = z.object({
   userId: z.string(),
   department: z.string(),
 });
+
+export const createCollegeSchema = z.object({
+  collegeName: z.string(),
+});
+export const createDepartmentSchema = z.object({
+  departmentName: z.string(),
+  collegeId: z.number(),
+});

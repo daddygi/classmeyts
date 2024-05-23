@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import PageTitle from "@/components/PageTitle";
 import SearchBar from "@/components/SearchComponent";
 import Card from "../_component/Card";
+import CreateCDTemplate from "../_component/CreateCDTemplate";
 
 const DashboardPage = () => {
   return (
@@ -30,21 +31,23 @@ const DashboardPage = () => {
           <PageTitle title="Department Block" />
           <div className="flex-grow flex justify-center items-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
-              {/* Column 1: Two stacked cards */}
               <div className="grid grid-rows-2 gap-4">
                 <Card title="Department 1" />
                 <Card title="Department 2" />
               </div>
-              {/* Column 2 and 3: One large card spanning two columns */}
               <div className="col-span-2">
                 <Card
                   title="Large Department Card"
                   width="w-full"
-                  height="h-[810px]" // Example height for a larger card
+                  height="h-[810px]" 
                 />
               </div>
             </div>
           </div>
+        </div>
+        <div className="p-12 flex flex-col gap-12">
+          <PageTitle title="Create College Block" />
+          <CreateCDTemplate />
         </div>
       </div>
     </div>
