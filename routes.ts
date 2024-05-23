@@ -6,7 +6,7 @@ export const publicRoutes = [
   "/",
   "/new-verification",
   "/api/posts",
-  "/api/postID",
+  "/api/comments",
 ];
 
 /**Routes that  require auth

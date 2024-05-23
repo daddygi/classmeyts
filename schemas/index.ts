@@ -69,3 +69,8 @@ export const createPostSchema = z.object({
   userId: z.string(),
   department: z.string(),
 });
+
+export const addCommentSchema = z.object({
+  comment: z.string(),
+  postId: z.string(),
+});

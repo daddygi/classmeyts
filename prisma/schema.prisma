@@ -12,7 +12,6 @@ enum UserRole {
   USER
 }
 
-// Schema for revision
 model User {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
   firstName     String?
@@ -28,6 +27,7 @@ model User {
   role          UserRole @default(USER)
   accounts      Account[]
   posts         Posts[]         @relation("UserPosts")
+  comments      Comments[]      @relation("AuthorComments")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -61,12 +61,20 @@ model VerificationToken {
   token           String @unique
   expires         DateTime
 
-  @@unique([email,token])
+  @@unique([email, token])
 }
 
 model Colleges {
   id              String  @id @default(auto()) @map("_id") @db.ObjectId
-  collegeName     String
+  collegeName     String  @unique
+  departments     Departments[]
+}
+
+model Departments {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  collegeId   String   @db.ObjectId
+  college     Colleges @relation(fields: [collegeId], references: [id])
+  department  String
 }
 
 model PasswordResetToken {
@@ -90,8 +98,31 @@ model Posts {
   tags        String
   archive     Boolean
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  user User @relation("UserPosts", fields: [userId], references: [id])
+  user        User     @relation("UserPosts", fields: [userId], references: [id])
+  comments    Comments[] @relation("PostComments")
+
+  @@index([userId])
+}
+
+model Comments {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId          String?  @db.ObjectId
+  parentId        String?  @db.ObjectId
+  comment         String
+  authorId        String   @db.ObjectId
+  authorUsername  String
+  upvote          Int
+  downvote        Int
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  post            Posts?   @relation("PostComments", fields: [postId], references: [id])
+  author          User     @relation("AuthorComments", fields: [authorId], references: [id])
+
+  @@index([postId])
+  @@index([parentId])
 }
