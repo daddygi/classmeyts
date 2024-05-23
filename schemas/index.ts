@@ -70,7 +70,17 @@ export const createPostSchema = z.object({
   department: z.string(),
 });
 
+
 export const addCommentSchema = z.object({
   comment: z.string(),
   postId: z.string(),
 });
+
+export const createCollegeSchema = z.object({
+  collegeName: z.string(),
+});
+export const createDepartmentSchema = z.object({
+  departmentName: z.string(),
+  collegeId: z.number(),
+});
+

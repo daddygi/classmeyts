@@ -65,9 +65,11 @@ model VerificationToken {
 }
 
 model Colleges {
-  id              String  @id @default(auto()) @map("_id") @db.ObjectId
-  collegeName     String  @unique
-  departments     Departments[]
+
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  collegeName String    @unique
+  departments Departments[]
+
 }
 
 model Departments {
@@ -76,6 +78,7 @@ model Departments {
   college     Colleges @relation(fields: [collegeId], references: [id])
   department  String
 }
+
 
 model PasswordResetToken {
   id              String  @id @default(auto()) @map("_id") @db.ObjectId

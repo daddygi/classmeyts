@@ -2,12 +2,16 @@
  *
  * @type {string[]}
  */
+
 export const publicRoutes = [
   "/",
   "/new-verification",
   "/api/posts",
   "/api/comments",
+  "/api/colleges"
 ];
+
+
 
 /**Routes that  require auth
  *
