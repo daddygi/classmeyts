@@ -41,48 +41,48 @@ interface BasicTableProps {
       setPage(0);
     };
     return (
-        <>
-        <PageTitle title={title} />
-        <div className="flex flex-col justify-center items-center mt-10">
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 550 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Id</TableCell>
-                  <TableCell align="center">Username</TableCell>
-                  <TableCell align="center">College</TableCell>
-                  <TableCell align="center">Department</TableCell>
+    <>
+      <PageTitle title={title} />
+      <div className="flex flex-col justify-center items-center mt-10">
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 550 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Id</TableCell>
+                <TableCell align="center">Username</TableCell>
+                <TableCell align="center">College</TableCell>
+                <TableCell align="center">Department</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : rows
+              ).map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    {row.id}
+                  </TableCell>
+                  <TableCell align="right">{row.username}</TableCell>
+                  <TableCell align="right">{row.college}</TableCell>
+                  <TableCell align="right">{row.department}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {(rowsPerPage > 0
-                  ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : rows
-                ).map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row">
-                      {row.id}
-                    </TableCell>
-                    <TableCell align="right">{row.username}</TableCell>
-                    <TableCell align="right">{row.college}</TableCell>
-                    <TableCell align="right">{row.department}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </div>
-      </>
-    );
-  }
-  
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
+    </>
+  );
+}
+
 export default BasicTable;

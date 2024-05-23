@@ -46,14 +46,14 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="h-screem flex">
+    <div className="h-screens flex">
       <div className="xl:w-20 h-screen">
         <Sidebar />
       </div>
       <div className="p-12 flex flex-col flex-grow">
         <PageTitle title="Dashboard" />
         <SearchBar />
-        <div className="p-12 flex flex-col gap-9">
+        <div className="p-12 flex flex-col gap-12">
           <PageTitle title="College Block" />
           <div className="flex-grow flex justify-center items-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
@@ -63,7 +63,7 @@ const DashboardPage = () => {
               />
               <Card
                 title="Most Recent Activity"
-                data={{ key1: "College of Engineering", key2: "College of Education & Liberal Arts" }}
+                data={{ key1: "College of Engineering", key2: "College of Pharmacy" }}
               />
               <Card title={"All College Blocks"} data={{ ...collegeBlocks }} />
             </div>

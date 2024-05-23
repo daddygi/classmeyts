@@ -7,7 +7,7 @@ interface TitleProps {
   data: Record<string, any>
 }
 
-const Card: React.FC<TitleProps> = ({ title, width = "w-[565px]", height = "h-[500px]", data }) => {
+const Card: React.FC<TitleProps> = ({ title, width = "w-[405px]", height = "h-[420px]", data }) => {
   return (
     <div className={`bg-white p-8 rounded-xl shadow-2xl ${width} ${height}`}>
       <div className="flex flex-col justify-between items-center h-full">

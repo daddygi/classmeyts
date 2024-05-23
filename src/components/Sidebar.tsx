@@ -51,7 +51,7 @@ function Sidebar() {
     pathname === "/settingsPage";
 
   return (
-    <div className="relative z-50 h-100$ flex flex-col bg-secondary-color-blue text-white group transition-all duration-300 ease-in-out w-16 hover:w-52">
+    <div className="relative z-50 h-full flex flex-col bg-secondary-color-blue text-white group transition-all duration-300 ease-in-out w-16 hover:w-52 absolute top-0 left-0">
       <Link
         className="pt-6 flex items-center p-3 border-b border-main-color-blue group-hover:border-none"
         href="/"
