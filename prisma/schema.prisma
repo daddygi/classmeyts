@@ -28,6 +28,7 @@ model User {
   accounts      Account[]
   posts         Posts[]         @relation("UserPosts")
   comments      Comments[]      @relation("AuthorComments")
+  bookmarks     Bookmarks[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -100,6 +101,7 @@ model Posts {
   file        String
   tags        String
   archive     Boolean
+  bookmarks   Bookmarks[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -128,4 +130,18 @@ model Comments {
 
   @@index([postId])
   @@index([parentId])
+}
+
+model Bookmarks {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  postId    String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
 }

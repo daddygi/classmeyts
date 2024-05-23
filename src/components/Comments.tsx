@@ -20,17 +20,17 @@ interface CommentsProps {
   postId: string;
 }
 
-function Comments(id: CommentsProps) {
+const Comments: React.FC<CommentsProps> = ({ postId }) => {
   const user = useCurrentUser();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     async function fetchComments() {
-      if (!id) return;
+      if (!postId) return;
 
       try {
-        const response = await fetch(`/api/comments?postId=${id}`);
+        const response = await fetch(`/api/comments?postId=${postId}`);
         if (!response.ok) {
           throw new Error(`Error fetching comments: ${response.statusText}`);
         }
@@ -42,19 +42,20 @@ function Comments(id: CommentsProps) {
     }
 
     fetchComments();
-  }, [id]);
+  }, [postId]);
 
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
 
     if (!user) {
+      console.log(user);
       console.error("User not authenticated");
       return;
     }
 
     try {
       const result = await addComment({
-        postId: postId as string,
+        postId: postId,
         comment: newComment,
       });
 
@@ -62,7 +63,10 @@ function Comments(id: CommentsProps) {
         throw new Error(result.error);
       }
 
-      setComments((prevComments) => [...prevComments, result.newComment]);
+      setComments((prevComments) => [
+        ...prevComments,
+        result.newComment as Comment, // Ensure the type matches Comment
+      ]);
       setNewComment("");
     } catch (error) {
       console.error(error);
@@ -110,6 +114,6 @@ function Comments(id: CommentsProps) {
       </div>
     </>
   );
-}
+};
 
 export default Comments;

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BookmarkIcon,
   BookmarkFilledIcon,
@@ -7,6 +7,7 @@ import {
   ArrowUpIcon,
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/use-current-user"; // Assume you have this hook
 
 interface CardsProps {
   id: string;
@@ -31,10 +32,69 @@ const Cards: React.FC<CardsProps> = ({
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const router = useRouter();
+  const user = useCurrentUser();
 
-  const handleBookmarkToggle = (e: React.MouseEvent) => {
+  useEffect(() => {
+    const fetchBookmarkStatus = async (userId: string, postId: string) => {
+      try {
+        const response = await fetch("/api/bookmarks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId, postId }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching bookmark status", error);
+        return null;
+      }
+    };
+
+    if (user) {
+      fetchBookmarkStatus(user.id, id).then((data) => {
+        if (data && data.isBookmarked !== undefined) {
+          setIsBookmarked(data.isBookmarked);
+        }
+      });
+    }
+  }, [user, id]);
+
+  const handleBookmarkToggle = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click event
-    setIsBookmarked(!isBookmarked);
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/bookmarks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user.id, postId: id }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          setIsBookmarked(!isBookmarked);
+        } else {
+          console.error("Error toggling bookmark");
+        }
+      } else {
+        console.error("Error toggling bookmark");
+      }
+    } catch (error) {
+      console.error("Error toggling bookmark", error);
+    }
   };
 
   const handleClick = () => {
