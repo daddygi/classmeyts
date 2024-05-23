@@ -6,18 +6,21 @@ import {
   PersonIcon,
   ArrowUpIcon,
 } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
 
 interface CardsProps {
+  id: string;
   username: string;
   title: string;
   description: string;
   tags: string;
-  file: Blob;
+  file?: string;
   upvote: number;
   downvote: number;
 }
 
 const Cards: React.FC<CardsProps> = ({
+  id,
   username,
   title,
   description,
@@ -27,13 +30,22 @@ const Cards: React.FC<CardsProps> = ({
   downvote,
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const router = useRouter();
 
-  const handleBookmarkToggle = () => {
+  const handleBookmarkToggle = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click event
     setIsBookmarked(!isBookmarked);
   };
 
+  const handleClick = () => {
+    router.push(`/posts/${id}`);
+  };
+
   return (
-    <div className="w-[375px] h-[337px] bg-white p-8 rounded-xl shadow-2xl">
+    <div
+      className="w-[375px] h-[337px] bg-white p-8 rounded-xl shadow-2xl cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <PersonIcon width={48} height={48} className="border rounded-full" />
@@ -60,14 +72,21 @@ const Cards: React.FC<CardsProps> = ({
 
       <div className="mt-4">
         <p className="text-sm mb-2">Title: {title}</p>
-        <p className="text-xs">Description: {description}</p>
+        <p className="text-xs mb-2">Description: {description}</p>
         <p className="text-xs">{tags}</p>
       </div>
 
       <div className="mt-3 mb-2">
         <div className="flex justify-between items-center">
           <div className="text-sm">
-            Material: {file ? file.name : "No file"}
+            Material:{" "}
+            {file ? (
+              <a href={file} download className="text-blue-500 underline">
+                Download
+              </a>
+            ) : (
+              "No file"
+            )}
           </div>
           <div className="flex gap-2 items-center">
             <div className="flex items-center gap-2">
@@ -81,6 +100,7 @@ const Cards: React.FC<CardsProps> = ({
           </div>
         </div>
       </div>
+
       <p className="text-xs border-t border-b border-[#D9D9D9] py-2">Comment</p>
 
       <div className="flex justify-between items-center text-sm mt-2">

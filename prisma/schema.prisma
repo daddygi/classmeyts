@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,22 +12,22 @@ enum UserRole {
   USER
 }
 
-//  Schema for revision
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
   firstName     String?
   lastName      String?
-  email         String?   @unique
+  email         String?         @unique
   emailVerified DateTime?
-  username      String?   @unique
-  studentNumber String?   @unique
+  username      String?         @unique
+  studentNumber String?         @unique
   college       String?
   department    String?
   yearLevel     String?
   passwordHash  String
-  role          UserRole  @default(USER)
+  role          UserRole @default(USER)
   accounts      Account[]
-  posts         Posts[]   @relation("UserPosts")
+  posts         Posts[]         @relation("UserPosts")
+  comments      Comments[]      @relation("AuthorComments")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -62,18 +56,20 @@ model Account {
 }
 
 model VerificationToken {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String
-  token   String   @unique
-  expires DateTime
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  email           String
+  token           String @unique
+  expires         DateTime
 
   @@unique([email, token])
 }
 
 model Colleges {
+
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   collegeName String    @unique
   departments Departments[]
+
 }
 
 model Departments {
@@ -85,18 +81,17 @@ model Departments {
 
 
 model PasswordResetToken {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String
-  token   String   @unique
-  expires DateTime
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  email           String
+  token           String  @unique
+  expires         DateTime
 
   @@unique([email, token])
 }
 
 model Posts {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String  @db.ObjectId
-  user        User    @relation(fields: [userId], references: [id], name: "UserPosts")
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
   department  String
   upvote      Int
   downvote    Int
@@ -106,6 +101,31 @@ model Posts {
   tags        String
   archive     Boolean
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation("UserPosts", fields: [userId], references: [id])
+  comments    Comments[] @relation("PostComments")
+
+  @@index([userId])
+}
+
+model Comments {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId          String?  @db.ObjectId
+  parentId        String?  @db.ObjectId
+  comment         String
+  authorId        String   @db.ObjectId
+  authorUsername  String
+  upvote          Int
+  downvote        Int
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  post            Posts?   @relation("PostComments", fields: [postId], references: [id])
+  author          User     @relation("AuthorComments", fields: [authorId], references: [id])
+
+  @@index([postId])
+  @@index([parentId])
 }
