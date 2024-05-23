@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/utils/utils";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
-const NavLinksUser = [
+const NavLinks = [
   {
     id: 1,
     title: "Dashboard",
@@ -25,32 +25,9 @@ const NavLinksUser = [
     icon: "/ask.png",
     href: "/discussion",
   },
-  {
-    id: 4,
-    title: "Account",
-    icon: "/account.png",
-    href: "/posts",
-  },
-];
-
-const NavLinksAdmin = [
-  {
-    id: 1,
-    title: "Dashboard",
-    icon: "/dashboard3.png",
-    href: "/dashboard",
-  },
-  {
-    id: 3,
-    title: "Logs",
-    icon: "/logs.png",
-    href: "/logs",
-  },
-  
 ];
 
 function Sidebar() {
-  const { data: session } = useSession();
   const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -67,9 +44,6 @@ function Sidebar() {
     setDropdownOpen(false);
   };
 
-  // const navLinks = session?.user?.isAdmin ? NavLinksAdmin : NavLinksUser;
-  const navLinks = NavLinksAdmin;
-
   // Determine if the current path is one of the account-related pages
   const isAccountPage =
     pathname === "/posts" ||
@@ -77,7 +51,7 @@ function Sidebar() {
     pathname === "/settingsPage";
 
   return (
-    <div className="relative z-50 h-100% flex flex-col bg-secondary-color-blue text-white group transition-all duration-300 ease-in-out w-16 hover:w-52">
+    <div className="relative z-50 h-100$ flex flex-col bg-secondary-color-blue text-white group transition-all duration-300 ease-in-out w-16 hover:w-52">
       <Link
         className="pt-6 flex items-center p-3 border-b border-main-color-blue group-hover:border-none"
         href="/"
@@ -94,7 +68,7 @@ function Sidebar() {
         </p>
       </Link>
 
-      {navLinks.map((item) => (
+      {NavLinks.map((item) => (
         <Link
           key={item.id}
           href={item.href}
