@@ -40,13 +40,13 @@ const PostPage = async ({ params }: PostProps) => {
       </div>
 
       <div className="flex justify-center items-center w-full p-12">
-        <div className="bg-white shadow-md rounded-lg p-12 w-[1214px] h-[850px] flex gap-8">
+        <div className="bg-white shadow-md rounded-lg p-12 w-[1214px] h-[850px] flex w-full gap-8">
           <div>
             <Link href="/dashboard">
               <Image src="/back.png" alt="Back" width={50} height={50} />
             </Link>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 w-full">
             <div className="flex items-center mb-4 gap-4">
               <div className="w-10 h-10 rounded-full bg-important mr-2"></div>
               <div>
@@ -74,7 +74,7 @@ const PostPage = async ({ params }: PostProps) => {
               </div>
             </div>
             <div>
-              <Comments />
+              <Comments postId={params.id} />
             </div>
           </div>
         </div>
