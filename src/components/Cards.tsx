@@ -7,7 +7,7 @@ import {
   ArrowUpIcon,
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/use-current-user"; // Assume you have this hook
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface CardsProps {
   id: string;
@@ -35,20 +35,31 @@ const Cards: React.FC<CardsProps> = ({
   const user = useCurrentUser();
 
   useEffect(() => {
-    async function fetchBookmarkStatus() {
-      if (!user) return;
+    const fetchBookmarkStatus = async (userId: string, postId: string) => {
       try {
-        const response = await fetch(
-          `/api/bookmarks?userId=${user.id}&postId=${id}`
-        );
+        const response = await fetch("/api/bookmarks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId, postId }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch bookmark status");
+        }
+
         const data = await response.json();
         setIsBookmarked(data.isBookmarked);
       } catch (error) {
         console.error("Error fetching bookmark status", error);
       }
-    }
+    };
 
-    fetchBookmarkStatus();
+    // Call fetchBookmarkStatus when user or id changes
+    if (user) {
+      fetchBookmarkStatus(user.id, id);
+    }
   }, [user, id]);
 
   const handleBookmarkToggle = async (e: React.MouseEvent) => {

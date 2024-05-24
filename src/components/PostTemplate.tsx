@@ -14,6 +14,8 @@ function PostTemplate() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const user = useCurrentUser();
   const {
@@ -29,11 +31,11 @@ function PostTemplate() {
       department: user?.department,
     },
   });
-  const onSubmit = (data: FormData) => {
+
+  const onSubmit = async (data: FormData) => {
     setError("");
     setSuccess("");
-    // alert("I am clicked");
-    // console.log(data);
+
     startTransition(() => {
       createPost(data).then((data) => {
         setError(data.error);
@@ -41,6 +43,14 @@ function PostTemplate() {
       });
     });
   };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+      setFileName(event.target.files[0].name);
+    }
+  };
+
   return (
     <form
       className="mb-8 bg-white p-6 rounded-xl w-[1693px]"
@@ -65,7 +75,16 @@ function PostTemplate() {
         disabled={isPending}
       />
       <div className="flex justify-between items-center mt-2">
-        <button className="p-2 border rounded">Attach</button>
+        <label className="p-2 border rounded">
+          Attach
+          <input
+            type="file"
+            className="hidden"
+            onChange={handleFileChange}
+            disabled={isPending}
+          />
+        </label>
+        {fileName && <span className="ml-2">{fileName}</span>}
         <div>
           <Button className="p-2 mr-2 border rounded hover:bg-page-background">
             Cancel
