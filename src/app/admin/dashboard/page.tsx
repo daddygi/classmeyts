@@ -1,8 +1,8 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
 import PageTitle from "@/components/PageTitle";
+import AdminSideBar from "../_component/AdminSideBar";
 import SearchBar from "@/components/SearchComponent";
 import Card from "../_component/Card";
 import CreateCDTemplate from "../_component/CreateCDTemplate";
@@ -48,61 +48,51 @@ const DashboardPage = () => {
   return (
     <div className="h-screens flex">
       <div className="xl:w-20 h-screen">
-        <Sidebar />
+        <AdminSideBar />
       </div>
-      <div className="p-12 flex flex-col flex-grow">
-        <PageTitle title="Dashboard" />
-        <SearchBar />
-        <div className="p-12 flex flex-col gap-12">
-          <PageTitle title="College Block" />
-          <div className="flex-grow flex justify-center items-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
-              <Card
-                title="Trending College Blocks"
-                data={{ key1: "College of Science", key2: "College of Engineering", key3: "College of Pharmacy" }}
-              />
-              <Card
-                title="Most Recent Activity"
-                data={{ key1: "College of Engineering", key2: "College of Pharmacy" }}
-              />
-              <Card title={"All College Blocks"} data={{ ...collegeBlocks }} />
+      <div className="p-7 flex flex-col flex-grow">
+        <div className="flex  ">
+          <PageTitle title="Dashboard" />
+          <div className="ml-24 flex gap-12  justify-center">
+            <PageTitle title="Create College Block" />
+            <div className="justify-center align-center">
+              <CreateCDTemplate />
             </div>
           </div>
         </div>
 
-        <div className="p-12 flex flex-col gap-12">
-          <PageTitle title="Department Block" />
-          <div className="flex-grow flex justify-center items-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
-              <div className="grid grid-rows-2 gap-4">
+        <div className="flex gap-12">
+          <div className="p-12 flex flex-col gap-12">
+            <PageTitle title="College Block" />
+            <div className="flex-grow flex justify-center items-center">
+              <div className="">
                 <Card
-                  title=" Trending Department Blocks"
-                  data={{ key1: "Computer Science", key2: "Chemistry", key3:"Biology", key4:"Political Science", key5:"Philosophy", key6:"Geology" }}
-                />
-                <Card
-                  title="Most Recent Activity"
-                  data={{ key1: "Computer Science", key2: "Biology", key3: "Polotical Science" }}
-                />
-              </div>
-              <div
-                className="col-span-2"
-                data={{ key1: "hello", key2: "world" }}
-                s
-              >
-                <Card
-                  title={"All Department Blocks"}
-                  width="w-full"
-                  height="h-[810px]"
-                  data={{ ...departmentBlocks }}
+                  title={"All College Blocks"}
+                  data={{ ...collegeBlocks }}
                 />
               </div>
             </div>
           </div>
-        </div>
-        <div className="p-12 flex flex-col gap-12 align-center justify-center">
-          <PageTitle title="Create College Block" />
-          <div className="justify-center align-center"><CreateCDTemplate /></div>
-          
+
+          <div className="p-12 flex flex-col gap-12 justify-center items-center">
+            <PageTitle title="Department Block" />
+            <div className="flex-grow flex justify-center items-center">
+              <div className="">
+                <div
+                  className="col-span-2 items-center flex justify-center"
+                  data={{ key1: "hello", key2: "world" }}
+                  s
+                >
+                  <Card
+                    title={"All Department Blocks"}
+                    width="w-full"
+                    height="h-[550px]"
+                    data={{ ...departmentBlocks }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
